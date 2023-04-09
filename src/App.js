@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          This page is being used for testing purposes.
+          This page is being used for testing purposes!
         </p>
         <a
           className="App-link"
