@@ -12,7 +12,7 @@ jobs:
   deploy_on_dev:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Rename environment
         run: |
           sed -i 's/my-react-app/my-react-app-dev/g' package*
