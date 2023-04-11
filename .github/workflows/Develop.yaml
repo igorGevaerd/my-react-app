@@ -17,8 +17,7 @@ jobs:
         run: |
           sed -i 's/my-react-app/my-react-app-dev/g' package*
           sed -i 's/my-react-app/my-react-app-dev/g' src/App.js
-      - name: Print file content
+      - name: Get modules and verify dir
         run: |
-          cat package.json
-          cat package-lock.json
-          cat src/App.js
+          npm install
+          ls -la
