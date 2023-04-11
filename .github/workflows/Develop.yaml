@@ -21,6 +21,7 @@ jobs:
           sed -i 's/my-react-app/my-react-app-dev/g' src/App.js
 
       - name: Cache node modules
+        id: cache-npm
         uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
