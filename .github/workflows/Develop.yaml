@@ -45,6 +45,12 @@ jobs:
       - name: Test
         run: npm test -- --coverage
 
+      - name: Upload Test Coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage
+          path: coverage
+
       - name: Build
         if: github.event_name == 'push'
         run: npm run build
