@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - 'develop'
+  push:
+    branches:
+      - 'develop'
 
 jobs:
   deploy_on_dev:
@@ -38,13 +41,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build
-        run: npm run build
-
       - name: Test
         run: npm test -- --coverage
 
+      - name: Build
+        if: github.event_name == 'push'
+        run: npm run build
+
       - name: Pushes to repo my-react-app-dev
+        if: github.event_name == 'push'
         uses: cpina/github-action-push-to-another-repository@v1.6
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
