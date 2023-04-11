@@ -12,12 +12,47 @@ jobs:
   deploy_on_dev:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Rename environment
         run: |
           sed -i 's/my-react-app/my-react-app-dev/g' package*
           sed -i 's/my-react-app/my-react-app-dev/g' src/App.js
-      - name: Get modules and verify dir
-        run: |
-          npm install
-          ls -la
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          # caching node_modules
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm test
+
+      - name: Pushes to repo my-react-app-dev
+        uses: cpina/github-action-push-to-another-repository@v1.6
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: 'build'
+          destination-github-username: 'igorGevaerd'
+          destination-repository-name: 'my-react-app-dev'
+          target-branch: gh-pages
