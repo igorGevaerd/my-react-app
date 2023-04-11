@@ -16,7 +16,7 @@ jobs:
       - name: Rename environment
         run: |
           sed -i 's/my-react-app/my-react-app-dev/g' package*
-          sed -i 's/my-react-app/my-react-app-dev/g' App.js
+          sed -i 's/my-react-app/my-react-app-dev/g' src/App.js
       - name: Print file content
         run: |
           cat package.json
