@@ -1,12 +1,12 @@
-name: Deploy in DEV environment
+name: CI - Deploy in DEV environment
 
 on:
   pull_request:
     branches:
       - 'develop'
-  push:
-    # branches:
-    #   - 'main'
+  # push:
+  #   branches:
+  #     - 'main'
 
 jobs:
   deploy_on_dev:
@@ -45,7 +45,7 @@ jobs:
         run: npm run build
 
       - name: Test
-        run: npm test
+        run: npm test -- --coverage
 
       - name: Pushes to repo my-react-app-dev
         uses: cpina/github-action-push-to-another-repository@v1.6
