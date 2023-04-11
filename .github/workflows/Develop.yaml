@@ -4,9 +4,6 @@ on:
   pull_request:
     branches:
       - 'develop'
-  push:
-  #   branches:
-  #     - 'main'
 
 jobs:
   deploy_on_dev:
