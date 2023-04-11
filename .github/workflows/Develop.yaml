@@ -5,8 +5,8 @@ on:
     branches:
       - 'develop'
   push:
-    branches:
-      - 'main'
+    # branches:
+    #   - 'main'
 
 jobs:
   deploy_on_dev:
