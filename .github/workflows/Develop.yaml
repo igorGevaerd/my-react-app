@@ -1,0 +1,24 @@
+name: Deploy in DEV environment
+
+on:
+  pull_request:
+    branches:
+      - 'develop'
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  deploy_on_dev:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Rename environment
+        run: |
+          sed -i 's/my-react-app/my-react-app-dev/g' package*
+          sed -i 's/my-react-app/my-react-app-dev/g' App.js
+      - name: Print file content
+        run: |
+          cat package.json
+          cat package-lock.json
+          cat App.js
