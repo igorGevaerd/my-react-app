@@ -21,4 +21,4 @@ jobs:
         run: |
           cat package.json
           cat package-lock.json
-          cat App.js
+          cat src/App.js
