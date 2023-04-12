@@ -80,6 +80,17 @@ jobs:
           sed -i 's/my-react-app-dev/my-react-app/g' package*
           sed -i 's/my-react-app-dev/my-react-app/g' src/App.js
 
+      - name: Build
+        if: github.event_name == 'push'
+        run: npm run build
+
       - name: Deploy to production (my-react-app)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: npm run deploy
+        uses: cpina/github-action-push-to-another-repository@v1.6
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: 'build'
+          destination-github-username: 'igorGevaerd'
+          destination-repository-name: 'my-react-app'
+          target-branch: gh-pages
