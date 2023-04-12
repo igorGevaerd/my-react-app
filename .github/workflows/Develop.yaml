@@ -63,7 +63,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Pushes to repo my-react-app-dev
+      - name: Deploy to staging (my-react-app-dev)
         if: github.event_name == 'push'
         uses: cpina/github-action-push-to-another-repository@v1.6
         env:
@@ -73,3 +73,13 @@ jobs:
           destination-github-username: 'igorGevaerd'
           destination-repository-name: 'my-react-app-dev'
           target-branch: gh-pages
+
+      - name: Rename environment
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          sed -i 's/my-react-app-dev/my-react-app/g' package*
+          sed -i 's/my-react-app-dev/my-react-app/g' src/App.js
+
+      - name: Deploy to production (my-react-app)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: npm run deploy
